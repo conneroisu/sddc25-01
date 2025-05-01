@@ -702,34 +702,36 @@
   }
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Weekly Reports Preview Functionality
-  const previewContainer = document.querySelector('.weekly-reports-preview-container');
-  const previewPlaceholder = document.querySelector('.preview-placeholder');
-  const previewFrame = document.getElementById('weekly-report-preview-frame');
-  
-  if (previewContainer && previewPlaceholder && previewFrame) {
-    // Get all weekly report links
-    const reportLinks = document.querySelectorAll('.weekly-report-link');
-    
-    // Add event listeners to each link
-    reportLinks.forEach(link => {
-      link.addEventListener('mouseenter', function() {
-        const pdfUrl = this.getAttribute('href');
-        if (pdfUrl) {
-          // Show the preview
-          previewFrame.src = pdfUrl;
-          previewPlaceholder.style.zIndex = 0;
-          previewFrame.parentElement.style.zIndex = 1;
+      document.addEventListener("DOMContentLoaded", function () {
+        // Weekly Reports Preview Functionality
+        const previewContainer = document.querySelector(".weekly-reports-preview-container");
+        const previewPlaceholder = document.querySelector(".preview-placeholder");
+        const previewFrame = document.getElementById("weekly-report-preview-frame");
+
+        if (previewContainer && previewPlaceholder && previewFrame) {
+          // Get all weekly report rows
+          const reportRows = document.querySelectorAll(".reports-table tbody tr");
+
+          // Add event listeners to each row
+          reportRows.forEach((row) => {
+            row.addEventListener("mouseenter", function () {
+              const pdfUrl = this.getAttribute("data-report-url");
+              if (pdfUrl) {
+                // Show the preview
+                previewFrame.src = pdfUrl;
+                previewPlaceholder.style.zIndex = 0;
+                previewFrame.parentElement.style.zIndex = 1;
+              }
+            });
+
+            // Make the entire row clickable to open the PDF
+            row.addEventListener("click", function () {
+              const pdfUrl = this.getAttribute("data-report-url");
+              if (pdfUrl) {
+                window.open(pdfUrl, "_blank");
+              }
+            });
+          });
         }
+
       });
-    });
-    
-    // Reset preview when mouse leaves the reports section
-    document.getElementById('weeklyreports').addEventListener('mouseleave', function() {
-      previewFrame.src = '';
-      previewPlaceholder.style.zIndex = 1;
-      previewFrame.parentElement.style.zIndex = 0;
-    });
-  }
-});

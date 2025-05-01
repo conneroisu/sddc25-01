@@ -870,78 +870,16 @@
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/vendor/bootstrap-submenu.min.js"></script>
     <script
+    defer
       src="js/iastate.js"
-      defer
     ></script>
     <script
-      src="js/pdf-preview.js"
-      defer
+    defer
+      src="js/custom.js"
     ></script>
 
     <!-- Added Weekly Reports Preview JavaScript -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Weekly Reports Preview Functionality
-        const previewContainer = document.querySelector(".weekly-reports-preview-container");
-        const previewPlaceholder = document.querySelector(".preview-placeholder");
-        const previewFrame = document.getElementById("weekly-report-preview-frame");
-
-        if (previewContainer && previewPlaceholder && previewFrame) {
-          // Get all weekly report rows
-          const reportRows = document.querySelectorAll(".reports-table tbody tr");
-
-          // Add event listeners to each row
-          reportRows.forEach((row) => {
-            row.addEventListener("mouseenter", function () {
-              const pdfUrl = this.getAttribute("data-report-url");
-              if (pdfUrl) {
-                // Show the preview
-                previewFrame.src = pdfUrl;
-                previewPlaceholder.style.zIndex = 0;
-                previewFrame.parentElement.style.zIndex = 1;
-              }
-            });
-
-            // Make the entire row clickable to open the PDF
-            row.addEventListener("click", function () {
-              const pdfUrl = this.getAttribute("data-report-url");
-              if (pdfUrl) {
-                window.open(pdfUrl, "_blank");
-              }
-            });
-          });
-
-          // Reset preview when mouse leaves the reports section
-          document.getElementById("weeklyreports").addEventListener("mouseleave", function () {
-            previewFrame.src = "";
-            previewPlaceholder.style.zIndex = 1;
-            previewFrame.parentElement.style.zIndex = 0;
-          });
-        }
-
-        // Disable the default PDF preview functionality for weekly reports section
-        const pdfLinkSetup = window.setupPdfLinks;
-        if (typeof pdfLinkSetup === "function") {
-          const originalSetupPdfLinks = pdfLinkSetup;
-          window.setupPdfLinks = function () {
-            // Call the original function
-            originalSetupPdfLinks();
-
-            // Remove any preview functionality from weekly reports section
-            const weeklyReportsSection = document.getElementById("weeklyreports");
-            if (weeklyReportsSection) {
-              const previewElements = weeklyReportsSection.querySelectorAll(
-                ".pdf-preview-container, .pdf-link-wrapper"
-              );
-              previewElements.forEach((element) => {
-                if (element.parentNode) {
-                  element.parentNode.removeChild(element);
-                }
-              });
-            }
-          };
-        }
-      });
     </script>
   </body>
 </html>
