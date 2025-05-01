@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -472,7 +472,18 @@
                           </span>
                         </td>
                         <td>Jan 31, 2025</td>
-                        <td>Literature review completion and preliminary architecture design</td>
+                        <td>
+                          Our team began onboarding into specialized project areas during the second week (Feb 25-Mar 4,
+                          2025), with each member making progress in their designated roles: Joseph studied the Kria
+                          board specifications and memory optimization, Tyler met with the current ISU team and
+                          familiarized himself with ONNX files, Conner established communications with Oregon State, set
+                          up Docker environments, created GitHub infrastructure, and prepared for model partitioning
+                          across the MPU, while Aidan shifted focus to understanding the multi-threading implementation
+                          in the C++ codebase for image processing optimization. Several pending issues remain,
+                          including hardware delivery, GitHub access, data vendor decisions, and C++ knowledge gaps, but
+                          everyone contributed approximately six hours each this week and has clear plans for continued
+                          progress in the coming week.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-3.pdf">
                         <td>
@@ -482,7 +493,19 @@
                           </span>
                         </td>
                         <td>Feb 14, 2025</td>
-                        <td>Dataset selection and preprocessing pipeline implementation</td>
+                        <td>
+                          During the third week of our project (March 5-11, 2025), our team deepened our understanding
+                          of the codebase through comments, diagrams, and meetings with former team members. Joseph
+                          researched Kria Board components for our assignment, created a slide deck, and explored Xilinx
+                          Vitis, while Tyler met with Mason Inman and our client to discuss algorithm environment setup
+                          and quantization needs. Conner built the Petalinux OS, wrote nix derivations for multithreaded
+                          builds, created a data version control presentation, and gave a lightning talk on U-Net
+                          architecture. Aidan connected with last semester's multithreaded programming developer,
+                          reviewed previous presentations, and tested matrix implementations to better understand the
+                          algorithm. Though we're still waiting for the Kria Board and need to complete environment
+                          setup, we collectively invested 17 hours this week (bringing our cumulative total to 62 hours)
+                          and have clear plans to advance our work in the upcoming week.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-4.pdf">
                         <td>
@@ -492,7 +515,21 @@
                           </span>
                         </td>
                         <td>Feb 28, 2025</td>
-                        <td>Baseline model implementation and initial performance metrics</td>
+                        <td>
+                          During our fourth week (March 12-25, 2025), our team made significant progress as the hardware
+                          finally arrived, allowing us to transition from theoretical learning to hands-on
+                          experimentation. Joseph finalized component selections for the project and studied data flow
+                          through the Kria Board. Tyler successfully configured the Vitis-AI docker container and
+                          trained the existing model to demonstrate proper environment setup to the client. Conner
+                          created a test application that split a PyTorch segmentation model into separate encoder and
+                          decoder ONNX models, noting decreased latency but increased throughput for multicore
+                          processing. Aidan continued close collaboration with the previous codebase owner while
+                          developing matrix equations for the multithreaded pipeline and becoming familiar with the
+                          cv::mat class. The team collectively invested 27 hours this week (bringing our cumulative
+                          total to 89 hours), and we're now focused on practical testing with the hardware, optimizing
+                          the model for pipeline division, experimenting with priority execution, and modifying the
+                          threading architecture for optimal performance in our pipelined structure.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-5.pdf">
                         <td>
@@ -502,7 +539,23 @@
                           </span>
                         </td>
                         <td>Mar 14, 2025</td>
-                        <td>First optimization techniques implementation and benchmarking</td>
+                        <td>
+                          In our fifth week (March 26-April 1, 2025), the team met to evaluate a new data version
+                          control system while making progress on software installations for properly running and
+                          visualizing the Kria board operations. Joseph successfully downloaded the correct Vitis AI
+                          version and got the Kria board operational with login requirements. Tyler researched
+                          optimization techniques specifically for U-Nets and CNNs on embedded systems. Conner fixed and
+                          improved the broken Docker development environment, making it more configurable, testing it
+                          across multiple platforms with GitHub Actions, and submitted PRs for both this fix and a slide
+                          deck presenting his data version control system proposal. Aidan formulated test equations for
+                          the multi-threading system and consulted with the previous codebase owner to validate his
+                          approach. The team faces several pending issues, including the desire for camera integration
+                          to visualize output, optimization technique selection, installer download automation, and
+                          reconciling conflicting advice on testing methodologies. After investing 25 hours this week
+                          (bringing our cumulative total to 114 hours), we plan to run benchmark tests, analyze the
+                          computational complexity of the existing model, test the unmodified model on the board, and
+                          research the cv::mat class to resolve testing discrepancies.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-6.pdf">
                         <td>
@@ -512,7 +565,22 @@
                           </span>
                         </td>
                         <td>Mar 28, 2025</td>
-                        <td>Hardware acceleration integration and performance testing</td>
+                        <td>
+                          During the sixth week of our project (April 2-8, 2025), our team focused on further optimizing
+                          the Kria board while advancing research on model splitting to improve computational
+                          efficiency. Joseph studied memory flow optimization for the Kria board. Tyler continued
+                          researching computational complexity and began creating a slide deck to propose a strategic
+                          model split. Conner built Petalinux configurations to run the previous team's code and
+                          experimented with OpenCV C++ to support development efforts. Aidan continued research on the
+                          cv::mat class, re-theorized the algorithm input structure, and held one-on-one meetings with
+                          both the client and past developers. We faced some challenges, including awaiting Petalinux
+                          configurations from Oregon State and Aidan discovering that his previous understanding of the
+                          threading system was incorrect, requiring a theory redesign. After contributing 19 hours this
+                          week (bringing our cumulative total to 133 hours), our team's upcoming plans include
+                          finalizing benchmark testing of the old code, presenting the proposed model division to the
+                          client, testing the custom Petalinux images with previous code, and developing a test input in
+                          cv::mat format to identify flaws in the current system.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-7.pdf">
                         <td>
@@ -522,7 +590,23 @@
                           </span>
                         </td>
                         <td>Apr 11, 2025</td>
-                        <td>Thread management implementation and multi-core testing</td>
+                        <td>
+                          In our seventh week (April 9-15, 2025), our team made significant progress on benchmarking and
+                          technical documentation while preparing for future implementation. Joseph worked with Conner
+                          to benchmark memory performance on the Kria board, specifically measuring data transfer rates
+                          between L1/L2 caches and RAM while exploring optimization strategies. Tyler completed his
+                          computational complexity analysis and prepared a presentation for both the team and client to
+                          propose his algorithm division approach. Conner produced an impressive 36-page memory
+                          benchmark documentation with approximately 12 graphs, complete with code examples (using
+                          Python for plotting, C for benchmarking, and Markdown for documentation) and submitted this
+                          comprehensive report as a pull request to the repository. Aidan reached out to a professor for
+                          expert consultation on optimal data structures for our implementation while continuing his
+                          theoretical work on designing inputs for thread testing and visualization. The team
+                          collectively invested 34 hours this week (bringing our cumulative total to 167 hours) and
+                          plans to continue benchmarking, present the algorithm division proposal, test multicore ONNX
+                          model loading on the FPGA board, set up an SSH server, and consult with faculty experts on
+                          data structure options for the `cv::mat` implementation.
+                        </td>
                       </tr>
                       <tr data-report-url="Weekly-Report-8.pdf">
                         <td>
@@ -532,7 +616,23 @@
                           </span>
                         </td>
                         <td>Apr 25, 2025</td>
-                        <td>End-to-end system integration and preliminary results (98.8% accuracy)</td>
+                        <td>
+                          During our eighth week (April 15-22, 2025), the team moved from evaluation to implementation
+                          as we transitioned to the next phase of the project. Joseph continued RAM benchmarking and
+                          testing on the Kria Board to further optimize performance. Tyler successfully presented his
+                          research findings to both the team and client, gaining approval to begin coding the model
+                          division that forms the core of our optimized implementation. Conner documented comprehensive
+                          benchmark results for RAM and on-chip memory in the main repository, complete with code used
+                          to generate and graph these findings, and has begun more focused testing on ONNX runtime
+                          inference for our U-Net model. Aidan scheduled a one-on-one meeting with an advisor after
+                          previous outreach attempts failed, continuing his research on cv::mat implementation within
+                          the codebase while developing a better understanding of board operations. The team faces two
+                          key pending issues: Conner needs access to the actual ONNX running code rather than using
+                          personal models, and Aidan is working to find the right specialist for data structure
+                          consultation. After investing 17 hours this week (bringing our cumulative total to 184 hours),
+                          we're focusing on ONNX model testing, finalizing the model division implementation, preparing
+                          for semester-end presentations, and consulting with domain specialists to refine our approach.
+                        </td>
                       </tr>
                     </tbody>
                   </table>
