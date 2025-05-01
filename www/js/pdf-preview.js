@@ -1,7 +1,7 @@
 /**
  * Enhanced PDF Preview
  * Fixed version that solves the disappearing preview issue
- * Save this file as: js/pdf-preview.js
+ * TODO: renmae this to custom.js
  */
 
 (function () {
@@ -701,3 +701,35 @@
     handleWindowResize();
   }
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Weekly Reports Preview Functionality
+  const previewContainer = document.querySelector('.weekly-reports-preview-container');
+  const previewPlaceholder = document.querySelector('.preview-placeholder');
+  const previewFrame = document.getElementById('weekly-report-preview-frame');
+  
+  if (previewContainer && previewPlaceholder && previewFrame) {
+    // Get all weekly report links
+    const reportLinks = document.querySelectorAll('.weekly-report-link');
+    
+    // Add event listeners to each link
+    reportLinks.forEach(link => {
+      link.addEventListener('mouseenter', function() {
+        const pdfUrl = this.getAttribute('href');
+        if (pdfUrl) {
+          // Show the preview
+          previewFrame.src = pdfUrl;
+          previewPlaceholder.style.zIndex = 0;
+          previewFrame.parentElement.style.zIndex = 1;
+        }
+      });
+    });
+    
+    // Reset preview when mouse leaves the reports section
+    document.getElementById('weeklyreports').addEventListener('mouseleave', function() {
+      previewFrame.src = '';
+      previewPlaceholder.style.zIndex = 1;
+      previewFrame.parentElement.style.zIndex = 0;
+    });
+  }
+});
