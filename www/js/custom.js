@@ -1,25 +1,19 @@
-/**
- * Enhanced PDF Preview
- * Fixed version that solves the disappearing preview issue
- * TODO: renmae this to custom.js
- */
-
 (function () {
   // Configuration options
   const config = {
-    previewWidth: 400, // Width of preview window
-    previewHeight: 300, // Height of preview window
-    previewOffset: 20, // Offset from cursor
-    previewDelay: 300, // Delay before showing preview (ms)
-    hideDelay: 800, // Delay before hiding preview (ms) - INCREASED
-    useThumbnails: true, // Use static thumbnails if available
-    defaultThumbnail: "images/pdf-icon.png", // Default thumbnail if preview fails
-    pdfIndicator: true, // Show [PDF] indicator next to links
-    tooltipText: "Hover to preview", // Tooltip text for PDF links
-    bufferZone: 30, // Buffer zone in pixels to help with mouse movement
+    previewWidth: 400,
+    previewHeight: 300,
+    previewOffset: 20,
+    previewDelay: 300,
+    hideDelay: 800,
+    useThumbnails: true,
+    defaultThumbnail: "images/pdf-icon.png",
+    pdfIndicator: true,
+    tooltipText: "Hover to preview",
+    bufferZone: 30,
   };
 
-  // Track active preview state
+  // Track state
   let activePreview = null;
   let isMouseOverPreview = false;
   let isMouseOverLink = false;
@@ -27,25 +21,26 @@
 
   // Initialize when DOM is ready
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize);
+    document.addEventListener("DOMContentLoaded", initializeAll);
   } else {
-    initialize();
+    initializeAll();
   }
 
-  // Main initialization function
-  function initialize() {
+  // Main initialization function for all preview functionality
+  function initializeAll() {
     // Add CSS styles
     injectStyles();
 
     // Setup PDF links
     setupPdfLinks();
+    
+    // Setup weekly reports preview
+    setupWeeklyReportsPreview();
 
     // Global event listeners
     document.addEventListener("click", handleGlobalClick);
     window.addEventListener("resize", handleWindowResize);
     window.addEventListener("scroll", handleWindowScroll);
-
-    // Track mouse movement globally - this is key to fixing the hover issue
     document.addEventListener("mousemove", handleGlobalMouseMove);
   }
 
@@ -185,19 +180,11 @@
         color: #666;
       }
 
-      /* Invisible buffer zone to help with mouse movement */
       .pdf-preview-buffer {
         position: absolute;
         background: transparent;
         pointer-events: none;
       }
-
-      /* Visible buffer zone for debugging (uncomment to see it) */
-      /*.pdf-preview-buffer {
-        position: absolute;
-        background: rgba(255,0,0,0.1);
-        z-index: 999;
-      }*/
 
       @keyframes spin {
         0% { transform: rotate(0deg); }
@@ -238,8 +225,7 @@
 
       const pdfUrl = link.getAttribute("href");
       const linkText = link.textContent.trim();
-      const pdfFilename = pdfUrl.split("/").pop();
-
+      
       // Create wrapper element
       const wrapper = document.createElement("span");
       wrapper.className = "pdf-link-wrapper";
@@ -274,7 +260,6 @@
 
       wrapper.addEventListener("mouseleave", function () {
         isMouseOverLink = false;
-        // We don't immediately hide - this is handled by global mouse tracking
         scheduleHidePreviewIfNeeded();
       });
 
@@ -282,6 +267,39 @@
         handlePdfLinkTouch(event, this);
       });
     });
+  }
+
+  // Setup weekly reports preview functionality
+  function setupWeeklyReportsPreview() {
+    const previewContainer = document.querySelector(".weekly-reports-preview-container");
+    const previewPlaceholder = document.querySelector(".preview-placeholder");
+    const previewFrame = document.getElementById("weekly-report-preview-frame");
+
+    if (previewContainer && previewPlaceholder && previewFrame) {
+      // Get all weekly report rows
+      const reportRows = document.querySelectorAll(".reports-table tbody tr");
+
+      // Add event listeners to each row
+      reportRows.forEach((row) => {
+        row.addEventListener("mouseenter", function () {
+          const pdfUrl = this.getAttribute("data-report-url");
+          if (pdfUrl) {
+            // Show the preview
+            previewFrame.src = pdfUrl;
+            previewPlaceholder.style.zIndex = 0;
+            previewFrame.parentElement.style.zIndex = 1;
+          }
+        });
+
+        // Make the entire row clickable to open the PDF
+        row.addEventListener("click", function () {
+          const pdfUrl = this.getAttribute("data-report-url");
+          if (pdfUrl) {
+            window.open(pdfUrl, "_blank");
+          }
+        });
+      });
+    }
   }
 
   // Handle hovering over PDF link
@@ -701,37 +719,3 @@
     handleWindowResize();
   }
 })();
-
-      document.addEventListener("DOMContentLoaded", function () {
-        // Weekly Reports Preview Functionality
-        const previewContainer = document.querySelector(".weekly-reports-preview-container");
-        const previewPlaceholder = document.querySelector(".preview-placeholder");
-        const previewFrame = document.getElementById("weekly-report-preview-frame");
-
-        if (previewContainer && previewPlaceholder && previewFrame) {
-          // Get all weekly report rows
-          const reportRows = document.querySelectorAll(".reports-table tbody tr");
-
-          // Add event listeners to each row
-          reportRows.forEach((row) => {
-            row.addEventListener("mouseenter", function () {
-              const pdfUrl = this.getAttribute("data-report-url");
-              if (pdfUrl) {
-                // Show the preview
-                previewFrame.src = pdfUrl;
-                previewPlaceholder.style.zIndex = 0;
-                previewFrame.parentElement.style.zIndex = 1;
-              }
-            });
-
-            // Make the entire row clickable to open the PDF
-            row.addEventListener("click", function () {
-              const pdfUrl = this.getAttribute("data-report-url");
-              if (pdfUrl) {
-                window.open(pdfUrl, "_blank");
-              }
-            });
-          });
-        }
-
-      });
