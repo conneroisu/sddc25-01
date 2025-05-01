@@ -177,7 +177,6 @@ html {
 }
 
 .pdf-preview {
-    display: none;
     position: absolute;
     top: -300px;
     left: 100px;

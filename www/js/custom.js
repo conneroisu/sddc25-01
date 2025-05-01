@@ -644,7 +644,6 @@
     }, 3000);
   }
 
-  // Fallback to thumbnail if iframe fails
   function fallbackToThumbnail(pdfUrl, contentElement, loadingElement) {
     // Remove iframe if present
     const iframe = contentElement.querySelector("iframe");
