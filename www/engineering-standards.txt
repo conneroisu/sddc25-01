@@ -1,1 +1,0 @@
-Our team is adopting internationally recognized engineering standards including ISO/IEC/IEEE 29119-2 for software testing processes, ISO/IEC/IEEE 16085 for risk management, and IEEE 1633 for software reliability to ensure our medical monitoring system follows best practices for safety-critical applications.
