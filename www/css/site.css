@@ -71,6 +71,7 @@
 }
 
 @media (max-width: 768px) {
+
   .team-list img,
   .team-list .content {
     width: 100%;
