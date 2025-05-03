@@ -107,6 +107,209 @@
       rel="icon"
     />
     <script src="https://cdn.theme.iastate.edu/fontawesome/5.0/js/all.min.js"></script>
+    <style>
+      /* Styles for the document sections layout */
+      .documents-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        margin-bottom: 50px;
+      }
+      
+      .section-title {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #c8102e;
+      }
+      
+      .documents-links {
+        flex: 1;
+        min-width: 300px;
+        padding-right: 25px;
+      }
+      
+      .documents-links section {
+        margin-bottom: 40px;
+      }
+      
+      .documents-links h2 {
+        border-bottom: 2px solid #c8102e;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .sticky-preview-container {
+        flex: 1;
+        min-width: 350px;
+        position: relative;
+        padding-left: 25px;
+        border-left: 1px solid #eee;
+        min-height: 700px; /* Ensure container has enough height */
+      }
+      
+      .sticky-preview {
+        position: relative; /* Start as relative */
+        width: 100%;
+        height: 600px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: #f8f8f8;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        z-index: 10; /* Ensure it appears above other content */
+      }
+      
+      /* Sticky class applied via JavaScript when appropriate */
+      .sticky-preview.is-sticky {
+        position: fixed;
+        top: 20px;
+        width: calc(50% - 50px); /* Adjust based on container width */
+      }
+      
+      /* For when it reaches the bottom */
+      .sticky-preview.at-bottom {
+        position: absolute;
+        bottom: 20px;
+        top: auto;
+      }
+      
+      .sticky-preview iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      
+      .sticky-preview-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: #666;
+        font-size: 1.2em;
+        background-color: #f9f9f9;
+      }
+      
+      .sticky-preview-placeholder i {
+        font-size: 4em;
+        margin-bottom: 20px;
+        color: #c8102e;
+      }
+      
+      /* Remove the individual preview iframes */
+      .pdf-preview {
+        display: none;
+      }
+      
+      /* Enhance PDF links for hover effect */
+      .pdf-link-container {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-left: 4px solid #c8102e;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        background-color: #fff;
+      }
+      
+      .pdf-link-container:hover {
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transform: translateX(3px);
+      }
+      
+      .pdf-link-container.active-pdf {
+        background-color: #f9f9f9;
+        border-left: 8px solid #c8102e;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .pdf-link {
+        font-weight: 500;
+        color: #c8102e;
+        text-decoration: none;
+        display: inline-block;
+      }
+      
+      .pdf-link:hover {
+        text-decoration: underline;
+      }
+      
+      .pdf-indicator {
+        font-size: 0.85em;
+        color: #666;
+        margin-left: 5px;
+      }
+      
+      .document-summary {
+        margin-top: 10px;
+        font-size: 0.95em;
+        color: #555;
+        line-height: 1.5;
+      }
+      
+      /* Add a loading indicator for the iframe */
+      .sticky-preview::after {
+        content: "Loading preview...";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #666;
+        font-size: 1.1em;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      
+      .sticky-preview.loading::after {
+        opacity: 1;
+      }
+      
+      /* Section ID offset for smooth scrolling */
+      #designdocuments, #lightning-talks, #engineering-standards, #testing {
+        scroll-margin-top: 80px;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+        .documents-container {
+          flex-direction: column;
+        }
+        
+        .sticky-preview-container {
+          margin-top: 40px;
+          padding-left: 0;
+          border-left: none;
+          border-top: 1px solid #eee;
+          padding-top: 30px;
+        }
+        
+        .documents-links {
+          padding-right: 0;
+        }
+        
+        .sticky-preview {
+          height: 500px;
+          position: static !important; /* Disable sticky on mobile */
+          width: 100% !important;
+        }
+        
+        .sticky-preview.is-sticky,
+        .sticky-preview.at-bottom {
+          position: static;
+          width: 100%;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .sticky-preview {
+          height: 400px;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -617,152 +820,108 @@
           </div>
         </section>
 
-        <section
-          class="row"
-          id="designdocuments"
-        >
+        <!-- MODIFIED DOCUMENTS SECTIONS WITH TWO-COLUMN LAYOUT AND STICKY PREVIEW -->
+        <div class="row" id="documents-sections">
           <div class="col-xs-12">
-            <h2>Design Documents</h2>
+            <h2 class="section-title">Project Documentation</h2>
+            <div class="documents-container">
+              <!-- Left column: Document links -->
+              <div class="documents-links">
+                <section id="designdocuments">
+                  <h2>Design Documents</h2>
+                  <div class="pdf-link-container" data-pdf-url="design-doc-1.pdf">
+                    <a href="design-doc-1.pdf" class="pdf-link">
+                      Design Doc 1: Semantic Segmentation Optimization
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    This document outlines the design specifications for our eye tracking semantic segmentation optimization
+                    project. It includes the mathematical approach to dividing the U-Net algorithm, memory allocation
+                    strategies, thread synchronization mechanisms, and hardware configurations for the
+                    <a href="https://www.amd.com/en/products/system-on-modules/kria/k26/kv260-vision-starter-kit.html">
+                      AMD Kria KV260
+                    </a>
+                    development board platform.
+                  </p>
+                </section>
 
-            <div class="pdf-link-container">
-              <a
-                href="design-doc-1.pdf"
-                class="pdf-link"
-              >
-                Design Doc 1: Semantic Segmentation Optimization
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="design-doc-1.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Design Document 1"
-                ></iframe>
+                <section id="lightning-talks">
+                  <h2>Lightning Talks</h2>
+                  <div class="pdf-link-container" data-pdf-url="lightning-talk-1.pdf">
+                    <a href="lightning-talk-1.pdf" class="pdf-link">
+                      Lightning Talk 1: Project Overview
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    A presentation covering our project's objectives, technical approach, and preliminary results for
+                    optimizing semantic segmentation for eye tracking applications on resource-constrained hardware.
+                  </p>
+                </section>
+
+                <section id="engineering-standards">
+                  <h2>Engineering Standards</h2>
+                  <div class="pdf-link-container" data-pdf-url="engineering-standards.pdf">
+                    <a href="engineering-standards.pdf" class="pdf-link">
+                      Engineering Standards
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    Documentation of the engineering standards used in our project, including IEEE standards for AI-based
+                    image recognition (IEEE 3129-2023), medical device performance evaluation (IEEE 2802-2022), and data
+                    privacy (IEEE 7002-2022).
+                  </p>
+                </section>
+
+                <section id="testing">
+                  <h2>Testing</h2>
+                  <div class="pdf-link-container" data-pdf-url="testing-strategy.pdf">
+                    <a href="testing-strategy.pdf" class="pdf-link">
+                      Testing Strategy
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    Comprehensive testing strategy document outlining our approach for validating the semantic segmentation
+                    optimization, including unit testing, integration testing, system testing, and performance benchmarking.
+                  </p>
+
+                  <div class="pdf-link-container" data-pdf-url="user-testing-plan.pdf">
+                    <a href="./user-testing-plan.pdf" class="pdf-link">
+                      User Testing
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    User testing plan document outlining the testing procedures and metrics for ensuring the quality of the
+                    provided product to users.
+                  </p>
+                </section>
+              </div>
+
+              <!-- Right column: Sticky PDF preview -->
+              <div class="sticky-preview-container">
+                <div class="sticky-preview" id="sticky-pdf-preview">
+                  <div class="sticky-preview-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>Hover over a PDF link to preview</p>
+                  </div>
+                  <iframe id="sticky-pdf-iframe" title="PDF Preview" src=""></iframe>
+                </div>
               </div>
             </div>
-            <br />
-            <p class="document-summary">
-              This document outlines the design specifications for our eye tracking semantic segmentation optimization
-              project. It includes the mathematical approach to dividing the U-Net algorithm, memory allocation
-              strategies, thread synchronization mechanisms, and hardware configurations for the
-              <a href="https://www.amd.com/en/products/system-on-modules/kria/k26/kv260-vision-starter-kit.html">
-                AMD Kria KV260
-              </a>
-              development board. platform.
-            </p>
           </div>
-        </section>
-
-        <section
-          class="row"
-          id="lightning-talks"
-        >
-          <div class="col-xs-12">
-            <h2>Lightning Talks</h2>
-            <div class="pdf-link-container">
-              <a
-                href="lightning-talk-1.pdf"
-                class="pdf-link"
-              >
-                Lightning Talk 1: Project Overview
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="lightning-talk-1.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Lightning Talk 1"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              A presentation covering our project's objectives, technical approach, and preliminary results for
-              optimizing semantic segmentation for eye tracking applications on resource-constrained hardware.
-            </p>
-          </div>
-        </section>
-
-        <section
-          class="row"
-          id="engineering-standards"
-        >
-          <div class="col-xs-12">
-            <h2>Engineering Standards</h2>
-            <div class="pdf-link-container">
-              <a
-                href="engineering-standards.pdf"
-                class="pdf-link"
-              >
-                Engineering Standards
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="engineering-standards.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Engineering Standards"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              Documentation of the engineering standards used in our project, including IEEE standards for AI-based
-              image recognition (IEEE 3129-2023), medical device performance evaluation (IEEE 2802-2022), and data
-              privacy (IEEE 7002-2022).
-            </p>
-          </div>
-        </section>
+        </div>
 
         <section
           class="row"
           id="testing"
         >
           <div class="col-xs-12">
-            <h2>Testing</h2>
-            <div class="pdf-link-container">
-              <a
-                href="testing-strategy.pdf"
-                class="pdf-link"
-              >
-                Testing Strategy
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="testing-strategy.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Testing Strategy"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              Comprehensive testing strategy document outlining our approach for validating the semantic segmentation
-              optimization, including unit testing, integration testing, system testing, and performance benchmarking.
-            </p>
-
-            <div class="pdf-link-container">
-              <a
-                href="./user-testing-plan.pdf"
-                class="pdf-link"
-              >
-                User Testing
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="user-testing-plan.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Testing Strategy"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              User testing plan document outlining the testing procedures and metrics for ensuring the quality of the
-              provided product to users.
-            </p>
+            <h2 class="d-none">Testing (Original Section)</h2>
+            <!-- Original testing section is empty as content moved to the two-column layout -->
           </div>
         </section>
       </div>
@@ -848,5 +1007,211 @@
       defer
       src="js/custom.js"
     ></script>
-  </body>
-</html>
+    <script>
+      // JavaScript for sticky PDF preview functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const pdfLinks = document.querySelectorAll('.pdf-link-container');
+        const stickyPreview = document.getElementById('sticky-pdf-preview');
+        const stickyIframe = document.getElementById('sticky-pdf-iframe');
+        const placeholder = document.querySelector('.sticky-preview-placeholder');
+        const documentsSection = document.getElementById('documents-sections');
+        const stickyContainer = document.querySelector('.sticky-preview-container');
+        const footer = document.querySelector('footer');
+        const weeklyReportsSection = document.getElementById('weeklyreports');
+        
+        // Track currently active PDF and last clicked PDF
+        let activePdfUrl = null;
+        let lastClickedPdfUrl = null;
+        
+        // Initialize the placeholder message
+        function showPlaceholder() {
+          placeholder.style.display = 'flex';
+          stickyIframe.style.display = 'none';
+          stickyIframe.src = '';
+          activePdfUrl = null;
+        }
+        
+        function showPdfPreview(pdfUrl, linkElement) {
+          if (pdfUrl) {
+            // Show loading state
+            stickyPreview.classList.add('loading');
+            
+            // Show the iframe and hide the placeholder
+            placeholder.style.display = 'none';
+            stickyIframe.style.display = 'block';
+            
+            // Only set the source if it's different from the current one
+            if (stickyIframe.src !== pdfUrl) {
+              stickyIframe.src = pdfUrl;
+            }
+            
+            // Highlight the active link
+            pdfLinks.forEach(l => l.classList.remove('active-pdf'));
+            if (linkElement) {
+              linkElement.classList.add('active-pdf');
+            }
+            
+            activePdfUrl = pdfUrl;
+            
+            // Remove loading state when iframe is loaded
+            stickyIframe.onload = function() {
+              stickyPreview.classList.remove('loading');
+            };
+          }
+        }
+        
+        // Initialize with placeholder
+        showPlaceholder();
+        
+        // Handle hover events for PDF links
+        let hoverTimer;
+        pdfLinks.forEach(link => {
+          // Mouse enter - show preview after small delay to prevent flickering
+          link.addEventListener('mouseenter', function() {
+            clearTimeout(hoverTimer);
+            hoverTimer = setTimeout(() => {
+              const pdfUrl = this.getAttribute('data-pdf-url');
+              showPdfPreview(pdfUrl, this);
+            }, 150); // Small delay to prevent flickering when moving mouse between links
+          });
+          
+          // Mouse leave - clear hover timer
+          link.addEventListener('mouseleave', function() {
+            clearTimeout(hoverTimer);
+          });
+          
+          // Click - show preview and remember the selection
+          link.addEventListener('click', function(e) {
+            // Prevent anchor tag default behavior
+            const linkElement = this.querySelector('.pdf-link');
+            if (linkElement) {
+              e.preventDefault();
+            }
+            
+            const pdfUrl = this.getAttribute('data-pdf-url');
+            lastClickedPdfUrl = pdfUrl;
+            showPdfPreview(pdfUrl, this);
+            
+            // Scroll to the preview if on mobile
+            if (window.innerWidth <= 992) {
+              stickyPreview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+        });
+        
+        // Reset preview when mouse leaves the document sections area, but keep it if there was a click
+        documentsSection.addEventListener('mouseleave', function() {
+          clearTimeout(hoverTimer);
+          
+          // If there was a previously clicked PDF, show that one
+          if (lastClickedPdfUrl) {
+            // Find the container with this URL
+            const matchingContainer = Array.from(pdfLinks).find(
+              link => link.getAttribute('data-pdf-url') === lastClickedPdfUrl
+            );
+            showPdfPreview(lastClickedPdfUrl, matchingContainer);
+          } else {
+            showPlaceholder();
+          }
+        });
+        
+        // Custom sticky implementation with precise control
+        function updateStickyBehavior() {
+          // Don't apply sticky behavior on small screens
+          if (window.innerWidth <= 992) {
+            stickyPreview.classList.remove('is-sticky');
+            stickyPreview.classList.remove('at-bottom');
+            return;
+          }
+          
+          // Get relevant dimensions and positions
+          const containerRect = stickyContainer.getBoundingClientRect();
+          const previewRect = stickyPreview.getBoundingClientRect();
+          const documentsSectionRect = documentsSection.getBoundingClientRect();
+          const footerRect = footer.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          
+          // Calculate boundaries
+          const containerTop = containerRect.top;
+          const containerBottom = containerRect.bottom;
+          const previewHeight = stickyPreview.offsetHeight;
+          const containerHeight = stickyContainer.offsetHeight;
+          const footerTop = footerRect.top;
+          
+          // Calculate the fixed width needed for the preview when sticky
+          // It should maintain the same width as its container
+          const fixedWidth = containerRect.width;
+          
+          // Check if preview should be sticky (container is in view but not fully visible)
+          if (containerTop < 20 && containerBottom > previewHeight + 20) {
+            // Ensure it doesn't overlap with the footer
+            if (footerTop - windowHeight + previewHeight < 0) {
+              // Near the footer, adjust position
+              stickyPreview.classList.remove('is-sticky');
+              stickyPreview.classList.add('at-bottom');
+            } else {
+              // Normal sticky behavior
+              stickyPreview.classList.add('is-sticky');
+              stickyPreview.classList.remove('at-bottom');
+              // Update width to match container
+              stickyPreview.style.width = fixedWidth + 'px';
+            }
+          } else if (containerBottom < previewHeight + 40) {
+            // Near the bottom of the container
+            stickyPreview.classList.remove('is-sticky');
+            stickyPreview.classList.add('at-bottom');
+          } else {
+            // Default non-sticky state
+            stickyPreview.classList.remove('is-sticky');
+            stickyPreview.classList.remove('at-bottom');
+            stickyPreview.style.width = '100%';
+          }
+        }
+        
+        // Initial position update and event binding
+        updateStickyBehavior();
+        window.addEventListener('scroll', updateStickyBehavior);
+        window.addEventListener('resize', updateStickyBehavior);
+        
+        // Handle navigation bar clicks to reset PDF preview when navigating away
+        const navLinks = document.querySelectorAll('.navbar-nav a');
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            // Check if the link points to a section outside the documents area
+            const targetId = this.getAttribute('href');
+            if (targetId && !targetId.includes('designdocuments') && 
+                !targetId.includes('lightning-talks') && 
+                !targetId.includes('engineering-standards') && 
+                !targetId.includes('testing')) {
+              // Reset preview state when navigating away from documents
+              lastClickedPdfUrl = null;
+              showPlaceholder();
+            }
+          });
+        });
+        
+        // Initial load - check if there's a hash in the URL pointing to a document section
+        window.addEventListener('load', function() {
+          const hash = window.location.hash;
+          if (hash) {
+            if (['#designdocuments', '#lightning-talks', '#engineering-standards', '#testing'].includes(hash)) {
+              // If we're directly loading a document section, show the first PDF in that section
+              const section = document.querySelector(hash);
+              if (section) {
+                const firstPdfLink = section.querySelector('.pdf-link-container');
+                if (firstPdfLink) {
+                  const pdfUrl = firstPdfLink.getAttribute('data-pdf-url');
+                  setTimeout(() => {
+                    showPdfPreview(pdfUrl, firstPdfLink);
+                    lastClickedPdfUrl = pdfUrl;
+                  }, 500); // Small delay to ensure everything is loaded
+                }
+              }
+            }
+          }
+          
+          // Initial sticky update
+          updateStickyBehavior();
+        });
+      });
+    </script>
