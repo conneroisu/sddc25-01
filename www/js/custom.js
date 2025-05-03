@@ -785,18 +785,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get relevant dimensions and positions
     const containerRect = stickyContainer.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Calculate boundaries
-    const containerTop = containerRect.top;
-    const containerBottom = containerRect.bottom;
-    const previewHeight = stickyPreview.offsetHeight;
-    const footerTop = footerRect.top;
 
     // Check if preview should be sticky (container is in view but not fully visible)
-    if (containerTop < 20 && containerBottom > previewHeight + 20) {
+    if (containerRect.top < 20 && containerRect.bottom > stickyPreview.offsetHeight + 20) {
       // Ensure it doesn't overlap with the footer
-      if (footerTop - windowHeight + previewHeight < 0) {
+      if (footerRect.top - window.innerHeight + stickyPreview.offsetHeight < 0) {
         // Near the footer, adjust position
         stickyPreview.classList.remove("is-sticky");
         stickyPreview.classList.add("at-bottom");
@@ -807,7 +800,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update width to match container
         stickyPreview.style.width = containerRect.width + "px";
       }
-    } else if (containerBottom < previewHeight + 40) {
+    } else if (containerRect.bottom < stickyPreview.offsetHeight + 40) {
       // Near the bottom of the container
       stickyPreview.classList.remove("is-sticky");
       stickyPreview.classList.add("at-bottom");
