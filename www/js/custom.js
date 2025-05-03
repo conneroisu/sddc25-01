@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Prefetch PDFs during idle time to improve Chrome performance
   function prefetchAllPdfs() {
-    pdfLinks.forEach(link => {
-      const url = link.getAttribute('data-pdf-url');
+    pdfLinks.forEach((link) => {
+      const url = link.getAttribute("data-pdf-url");
       if (url && !pdfCache.has(url)) {
         fetch(url)
-          .then(response => response.blob())
-          .then(blob => {
+          .then((response) => response.blob())
+          .then((blob) => {
             pdfCache.set(url, URL.createObjectURL(blob));
           })
           .catch(() => {});
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if ('requestIdleCallback' in window) {
+  if ("requestIdleCallback" in window) {
     requestIdleCallback(prefetchAllPdfs);
   } else {
     setTimeout(prefetchAllPdfs, 2000);
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stickyIframe.style.display = "block";
 
       // Highlight the active link immediately
-      pdfLinks.forEach(l => l.classList.remove("active-pdf"));
+      pdfLinks.forEach((l) => l.classList.remove("active-pdf"));
       if (linkElement) {
         linkElement.classList.add("active-pdf");
       }
@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         // Fetch PDF, cache blob URL, then display
         fetch(pdfUrl)
-          .then(response => response.blob())
-          .then(blob => {
+          .then((response) => response.blob())
+          .then((blob) => {
             const blobUrl = URL.createObjectURL(blob);
             pdfCache.set(pdfUrl, blobUrl);
             stickyIframe.src = blobUrl;
