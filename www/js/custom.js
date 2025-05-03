@@ -89,7 +89,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Custom sticky implementation with precise control
+  // Calculate available height for the sticky preview
+  function getAvailableHeight() {
+    const windowHeight = window.innerHeight;
+    const footerTop = footer.getBoundingClientRect().top;
+    const headerOffset = 20; // Fixed header offset
+    const footerBuffer = 20; // Additional buffer for footer
+
+    // Return height from top of viewport (plus header offset) to bottom of container (or top of footer)
+    if (footerTop < windowHeight) {
+      return footerTop - headerOffset - footerBuffer;
+    } else {
+      return windowHeight - headerOffset - footerBuffer;
+    }
+  }
+
+  // Custom sticky implementation with precise control and dynamic height
   function updateStickyBehavior() {
     if (window.innerWidth <= 992) {
       stickyPreview.classList.remove("is-sticky");
@@ -99,23 +114,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const containerRect = stickyContainer.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
+    const availableHeight = getAvailableHeight();
+
+    // Apply the calculated height to the sticky preview
+    if (stickyPreview.classList.contains("is-sticky") || stickyPreview.classList.contains("at-bottom")) {
+      stickyPreview.style.height = availableHeight + "px";
+    }
 
     if (containerRect.top < 20 && containerRect.bottom > stickyPreview.offsetHeight + 20) {
       if (footerRect.top - window.innerHeight + stickyPreview.offsetHeight < 0) {
+        // We're at the bottom of the page
         stickyPreview.classList.remove("is-sticky");
         stickyPreview.classList.add("at-bottom");
+        // When at bottom, recalculate height to avoid footer overlap
+        const bottomToFooter = Math.max(0, footerRect.top - containerRect.bottom);
+        stickyPreview.style.height = (availableHeight + bottomToFooter) + "px";
       } else {
+        // We're in the middle of the page (sticky state)
         stickyPreview.classList.add("is-sticky");
         stickyPreview.classList.remove("at-bottom");
         stickyPreview.style.width = containerRect.width + "px";
+        stickyPreview.style.height = availableHeight + "px";
       }
     } else if (containerRect.bottom < stickyPreview.offsetHeight + 40) {
+      // We're near the bottom of the container
       stickyPreview.classList.remove("is-sticky");
       stickyPreview.classList.add("at-bottom");
+      // Adjust height to avoid footer overlap
+      const bottomToFooter = Math.max(0, footerRect.top - containerRect.bottom);
+      stickyPreview.style.height = (availableHeight + bottomToFooter) + "px";
     } else {
+      // We're at the top of the container (normal state)
       stickyPreview.classList.remove("is-sticky");
       stickyPreview.classList.remove("at-bottom");
       stickyPreview.style.width = "100%";
+      // When at top, use viewport-based height
+      stickyPreview.style.height = "calc(100vh - 20px)";
     }
   }
 
@@ -124,7 +158,16 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", updateStickyBehavior);
   window.addEventListener("resize", updateStickyBehavior);
 
+  // Recalculate on page load to ensure all elements are properly sized
   window.addEventListener("load", function () {
     updateStickyBehavior();
   });
+
+  // Show the first PDF by default after a brief delay
+  setTimeout(function() {
+    const firstPdfLink = document.querySelector(".pdf-link-container");
+    if (firstPdfLink) {
+      showPdfPreview(firstPdfLink.getAttribute("data-pdf-url"), firstPdfLink);
+    }
+  }, 500);
 });

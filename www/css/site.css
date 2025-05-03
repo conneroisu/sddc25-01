@@ -645,7 +645,8 @@ footer {
   position: relative;
   /* Start as relative */
   width: 100%;
-  height: 600px;
+  height: calc(100vh - 20px);
+  /* Full viewport height minus header offset */
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -660,9 +661,11 @@ footer {
 .sticky-preview.is-sticky {
   position: fixed;
   top: 20px;
-  width: calc(50% - 50px);
-
-  padding-top: 2em;
+  height: calc(100vh - 20px);
+  /* Full viewport height minus header offset */
+  max-height: calc(100vh - 20px - 70px);
+  /* Account for potential footer space */
+  padding-top: 0;
   /* Adjust based on container width */
 }
 
@@ -671,6 +674,8 @@ footer {
   position: absolute;
   bottom: 20px;
   top: auto;
+  height: calc(100vh - 20px - 70px);
+  /* Account for footer space */
 }
 
 .sticky-preview iframe {
@@ -696,12 +701,10 @@ footer {
   color: #c8102e;
 }
 
-/* Remove the individual preview iframes */
 .pdf-preview {
   display: none;
 }
 
-/* Enhance PDF links for hover effect */
 .pdf-link-container {
   padding: 12px 15px;
   margin-bottom: 15px;
@@ -768,7 +771,6 @@ footer {
   opacity: 1;
 }
 
-/* Section ID offset for smooth scrolling */
 #designdocuments,
 #lightning-talks,
 #engineering-standards,
