@@ -33,7 +33,7 @@
 
     // Setup PDF links
     setupPdfLinks();
-    
+
     // Setup weekly reports preview
     setupWeeklyReportsPreview();
 
@@ -225,7 +225,7 @@
 
       const pdfUrl = link.getAttribute("href");
       const linkText = link.textContent.trim();
-      
+
       // Create wrapper element
       const wrapper = document.createElement("span");
       wrapper.className = "pdf-link-wrapper";
@@ -720,208 +720,150 @@
 })();
 
 // JavaScript for sticky PDF preview functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const pdfLinks = document.querySelectorAll('.pdf-link-container');
-  const stickyPreview = document.getElementById('sticky-pdf-preview');
-  const stickyIframe = document.getElementById('sticky-pdf-iframe');
-  const placeholder = document.querySelector('.sticky-preview-placeholder');
-  const documentsSection = document.getElementById('documents-sections');
-  const stickyContainer = document.querySelector('.sticky-preview-container');
-  const footer = document.querySelector('footer');
-  const weeklyReportsSection = document.getElementById('weeklyreports');
-  
-  // Track currently active PDF and last clicked PDF
-  let activePdfUrl = null;
-  let lastClickedPdfUrl = null;
-  
+document.addEventListener("DOMContentLoaded", function () {
+  const pdfLinks = document.querySelectorAll(".pdf-link-container");
+  const stickyPreview = document.getElementById("sticky-pdf-preview");
+  const stickyIframe = document.getElementById("sticky-pdf-iframe");
+  const placeholder = document.querySelector(".sticky-preview-placeholder");
+  const documentsSection = document.getElementById("documents-sections");
+  const stickyContainer = document.querySelector(".sticky-preview-container");
+  const footer = document.querySelector("footer");
+
   // Initialize the placeholder message
   function showPlaceholder() {
-    placeholder.style.display = 'flex';
-    stickyIframe.style.display = 'none';
-    stickyIframe.src = '';
+    placeholder.style.display = "flex";
+    stickyIframe.style.display = "none";
+    stickyIframe.src = "";
     activePdfUrl = null;
   }
-  
+
   function showPdfPreview(pdfUrl, linkElement) {
     if (pdfUrl) {
       // Show loading state
-      stickyPreview.classList.add('loading');
-      
+      stickyPreview.classList.add("loading");
+
       // Show the iframe and hide the placeholder
-      placeholder.style.display = 'none';
-      stickyIframe.style.display = 'block';
-      
+      placeholder.style.display = "none";
+      stickyIframe.style.display = "block";
+
       // Only set the source if it's different from the current one
       if (stickyIframe.src !== pdfUrl) {
         stickyIframe.src = pdfUrl;
       }
-      
+
       // Highlight the active link
-      pdfLinks.forEach(l => l.classList.remove('active-pdf'));
+      pdfLinks.forEach((l) => l.classList.remove("active-pdf"));
       if (linkElement) {
-        linkElement.classList.add('active-pdf');
+        linkElement.classList.add("active-pdf");
       }
-      
+
       activePdfUrl = pdfUrl;
-      
+
       // Remove loading state when iframe is loaded
-      stickyIframe.onload = function() {
-        stickyPreview.classList.remove('loading');
+      stickyIframe.onload = function () {
+        stickyPreview.classList.remove("loading");
       };
     }
   }
-  
+
   // Initialize with placeholder
   showPlaceholder();
-  
+
   // Handle hover events for PDF links
   let hoverTimer;
-  pdfLinks.forEach(link => {
+  pdfLinks.forEach((link) => {
     // Mouse enter - show preview after small delay to prevent flickering
-    link.addEventListener('mouseenter', function() {
+    link.addEventListener("mouseenter", function () {
       clearTimeout(hoverTimer);
       hoverTimer = setTimeout(() => {
-        const pdfUrl = this.getAttribute('data-pdf-url');
+        const pdfUrl = this.getAttribute("data-pdf-url");
         showPdfPreview(pdfUrl, this);
       }, 150); // Small delay to prevent flickering when moving mouse between links
     });
-    
+
     // Mouse leave - clear hover timer
-    link.addEventListener('mouseleave', function() {
+    link.addEventListener("mouseleave", function () {
       clearTimeout(hoverTimer);
     });
-    
+
     // Click - show preview and remember the selection
-    link.addEventListener('click', function(e) {
+    link.addEventListener("click", function (e) {
       // Prevent anchor tag default behavior
-      const linkElement = this.querySelector('.pdf-link');
+      const linkElement = this.querySelector(".pdf-link");
       if (linkElement) {
         e.preventDefault();
       }
-      
-      const pdfUrl = this.getAttribute('data-pdf-url');
+
+      const pdfUrl = this.getAttribute("data-pdf-url");
       lastClickedPdfUrl = pdfUrl;
       showPdfPreview(pdfUrl, this);
-      
+
       // Scroll to the preview if on mobile
       if (window.innerWidth <= 992) {
-        stickyPreview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        stickyPreview.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     });
   });
-  
-  // Reset preview when mouse leaves the document sections area, but keep it if there was a click
-  documentsSection.addEventListener('mouseleave', function() {
-    clearTimeout(hoverTimer);
-    
-    // If there was a previously clicked PDF, show that one
-    if (lastClickedPdfUrl) {
-      // Find the container with this URL
-      const matchingContainer = Array.from(pdfLinks).find(
-        link => link.getAttribute('data-pdf-url') === lastClickedPdfUrl
-      );
-      showPdfPreview(lastClickedPdfUrl, matchingContainer);
-    } else {
-      showPlaceholder();
-    }
-  });
-  
+
   // Custom sticky implementation with precise control
   function updateStickyBehavior() {
     // Don't apply sticky behavior on small screens
     if (window.innerWidth <= 992) {
-      stickyPreview.classList.remove('is-sticky');
-      stickyPreview.classList.remove('at-bottom');
+      stickyPreview.classList.remove("is-sticky");
+      stickyPreview.classList.remove("at-bottom");
       return;
     }
-    
+
     // Get relevant dimensions and positions
     const containerRect = stickyContainer.getBoundingClientRect();
     const previewRect = stickyPreview.getBoundingClientRect();
     const documentsSectionRect = documentsSection.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    
+
     // Calculate boundaries
     const containerTop = containerRect.top;
     const containerBottom = containerRect.bottom;
     const previewHeight = stickyPreview.offsetHeight;
     const containerHeight = stickyContainer.offsetHeight;
     const footerTop = footerRect.top;
-    
+
     // Calculate the fixed width needed for the preview when sticky
     // It should maintain the same width as its container
     const fixedWidth = containerRect.width;
-    
+
     // Check if preview should be sticky (container is in view but not fully visible)
     if (containerTop < 20 && containerBottom > previewHeight + 20) {
       // Ensure it doesn't overlap with the footer
       if (footerTop - windowHeight + previewHeight < 0) {
         // Near the footer, adjust position
-        stickyPreview.classList.remove('is-sticky');
-        stickyPreview.classList.add('at-bottom');
+        stickyPreview.classList.remove("is-sticky");
+        stickyPreview.classList.add("at-bottom");
       } else {
         // Normal sticky behavior
-        stickyPreview.classList.add('is-sticky');
-        stickyPreview.classList.remove('at-bottom');
+        stickyPreview.classList.add("is-sticky");
+        stickyPreview.classList.remove("at-bottom");
         // Update width to match container
-        stickyPreview.style.width = fixedWidth + 'px';
+        stickyPreview.style.width = fixedWidth + "px";
       }
     } else if (containerBottom < previewHeight + 40) {
       // Near the bottom of the container
-      stickyPreview.classList.remove('is-sticky');
-      stickyPreview.classList.add('at-bottom');
+      stickyPreview.classList.remove("is-sticky");
+      stickyPreview.classList.add("at-bottom");
     } else {
       // Default non-sticky state
-      stickyPreview.classList.remove('is-sticky');
-      stickyPreview.classList.remove('at-bottom');
-      stickyPreview.style.width = '100%';
+      stickyPreview.classList.remove("is-sticky");
+      stickyPreview.classList.remove("at-bottom");
+      stickyPreview.style.width = "100%";
     }
   }
-  
+
   // Initial position update and event binding
   updateStickyBehavior();
-  window.addEventListener('scroll', updateStickyBehavior);
-  window.addEventListener('resize', updateStickyBehavior);
-  
-  // Handle navigation bar clicks to reset PDF preview when navigating away
-  const navLinks = document.querySelectorAll('.navbar-nav a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      // Check if the link points to a section outside the documents area
-      const targetId = this.getAttribute('href');
-      if (targetId && !targetId.includes('designdocuments') && 
-          !targetId.includes('lightning-talks') && 
-          !targetId.includes('engineering-standards') && 
-          !targetId.includes('testing')) {
-        // Reset preview state when navigating away from documents
-        lastClickedPdfUrl = null;
-        showPlaceholder();
-      }
-    });
-  });
-  
-  // Initial load - check if there's a hash in the URL pointing to a document section
-  window.addEventListener('load', function() {
-    const hash = window.location.hash;
-    if (hash) {
-      if (['#designdocuments', '#lightning-talks', '#engineering-standards', '#testing'].includes(hash)) {
-        // If we're directly loading a document section, show the first PDF in that section
-        const section = document.querySelector(hash);
-        if (section) {
-          const firstPdfLink = section.querySelector('.pdf-link-container');
-          if (firstPdfLink) {
-            const pdfUrl = firstPdfLink.getAttribute('data-pdf-url');
-            setTimeout(() => {
-              showPdfPreview(pdfUrl, firstPdfLink);
-              lastClickedPdfUrl = pdfUrl;
-            }, 500); // Small delay to ensure everything is loaded
-          }
-        }
-      }
-    }
-    
-    // Initial sticky update
+  window.addEventListener("scroll", updateStickyBehavior);
+  window.addEventListener("resize", updateStickyBehavior);
+
+  window.addEventListener("load", function () {
     updateStickyBehavior();
   });
 });
