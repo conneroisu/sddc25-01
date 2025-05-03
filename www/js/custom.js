@@ -171,3 +171,77 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, 500);
 });
+// ADD TO THE END OF custom.js
+
+// Team members interaction enhancement
+document.addEventListener("DOMContentLoaded", function() {
+  const teamMembers = document.querySelectorAll('.team');
+  
+  // Add staggered animation effect on page load
+  teamMembers.forEach((member, index) => {
+    setTimeout(() => {
+      member.style.opacity = '1';
+      member.style.transform = 'translateY(0)';
+    }, 150 * index);
+  });
+  
+  // Add hover listener for better touch device support
+  teamMembers.forEach(member => {
+    member.addEventListener('mouseenter', function() {
+      // This helps trigger hover effects more reliably on touch devices
+      this.classList.add('is-hovered');
+    });
+    
+    member.addEventListener('mouseleave', function() {
+      this.classList.remove('is-hovered');
+    });
+  });
+  
+  // Fallback for browsers that don't support object-fit (like IE)
+  if ('objectFit' in document.documentElement.style === false) {
+    document.querySelectorAll('.team img').forEach(img => {
+      const container = img.parentElement;
+      const imgUrl = img.src;
+      
+      if (imgUrl) {
+        container.style.backgroundImage = 'url(' + imgUrl + ')';
+        container.style.backgroundSize = 'cover';
+        container.style.backgroundPosition = 'center top';
+        img.style.opacity = 0;
+      }
+    });
+  }
+  
+  // Equalize heights of team member cards if needed
+  function equalizeTeamHeights() {
+    if (window.innerWidth >= 768) {
+      // Reset heights first
+      teamMembers.forEach(member => {
+        member.style.height = 'auto';
+      });
+      
+      // Find the tallest card
+      let maxHeight = 0;
+      teamMembers.forEach(member => {
+        const height = member.offsetHeight;
+        maxHeight = Math.max(maxHeight, height);
+      });
+      
+      // Set all cards to the height of the tallest
+      if (maxHeight > 0) {
+        teamMembers.forEach(member => {
+          member.style.height = maxHeight + 'px';
+        });
+      }
+    } else {
+      // On mobile, let cards be their natural height
+      teamMembers.forEach(member => {
+        member.style.height = 'auto';
+      });
+    }
+  }
+  
+  // Run on page load and resize
+  window.addEventListener('load', equalizeTeamHeights);
+  window.addEventListener('resize', equalizeTeamHeights);
+});
