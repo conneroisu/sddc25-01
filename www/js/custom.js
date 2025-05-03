@@ -725,7 +725,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const stickyPreview = document.getElementById("sticky-pdf-preview");
   const stickyIframe = document.getElementById("sticky-pdf-iframe");
   const placeholder = document.querySelector(".sticky-preview-placeholder");
-  const documentsSection = document.getElementById("documents-sections");
   const stickyContainer = document.querySelector(".sticky-preview-container");
   const footer = document.querySelector("footer");
 
@@ -798,8 +797,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Get relevant dimensions and positions
     const containerRect = stickyContainer.getBoundingClientRect();
-    const previewRect = stickyPreview.getBoundingClientRect();
-    const documentsSectionRect = documentsSection.getBoundingClientRect();
     const footerRect = footer.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
@@ -807,7 +804,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const containerTop = containerRect.top;
     const containerBottom = containerRect.bottom;
     const previewHeight = stickyPreview.offsetHeight;
-    const containerHeight = stickyContainer.offsetHeight;
     const footerTop = footerRect.top;
 
     // Calculate the fixed width needed for the preview when sticky

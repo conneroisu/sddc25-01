@@ -721,7 +721,7 @@ footer {
 
 .pdf-link-container.active-pdf {
   background-color: #f9f9f9;
-  border-left: 8px solid #c8102e;
+  border-left: 1em solid #c8102e;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
