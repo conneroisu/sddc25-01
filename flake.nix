@@ -24,6 +24,7 @@
           curl
           jq
           nodePackages.prettier
+          vscode-langservers-extracted
         ];
       };
     });

@@ -253,6 +253,12 @@
                     development board
                   </li>
                   <li>Strategic DPU (Deep Processing Unit) resource sharing</li>
+                  <li>Onnx Model Decomposition</li>
+                  <li>Kernel Scheduling Optimization</li>
+                  <li>AMD FPGA Development Tools</li>
+                  <li>AMD Vitis AI Development Tools</li>
+                  <li>Petalinux Tools</li>
+                  <li>Docker Development Environment</li>
                 </ul>
               </article>
               <aside class="col-md-4">
@@ -263,106 +269,114 @@
                   style="width: 100%; height: auto"
                 />
               </aside>
+              <div
+                class="row"
+                style="margin-top: 20px; margin-bottom: 20px"
+              >
+                <div
+                  class="col-md-6"
+                  style="padding: 15px"
+                >
+                  <img
+                    src="kv260.webp"
+                    alt="AMD Kria KV260 development board"
+                    class="img-responsive"
+                    style="width: 100em; height: auto"
+                  />
+                </div>
+                <div
+                  class="col-md-6"
+                  style="padding: 15px"
+                >
+                  <img
+                    src="unet.webp"
+                    alt="AMD Kria KV260 development board"
+                    class="img-responsive"
+                    style="width: 100em; height: auto;"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section
-          class="row"
-          id="teammembers"
-        >
-          <div class="col-12">
-            <div class="section-title">
-              <h2>Team Members</h2>
-            </div>
-          </div>
+<section class="row" id="teammembers">
+  <div class="col-xs-12">
+    <div class="section-title mb-5">
+      <h2>Team Members</h2>
+    </div>
+  </div>
 
-          <div class="row">
-            <article class="col-lg-3 col-md-3 col-sm-6 team-member">
-              <div class="text-center">
-                <h4 class="title">Tyler Schaefer</h4>
-                <small class="text-muted">ML Algorithm Analyst</small>
-                <img
-                  src="./tyler.webp"
-                  class="img-responsive"
-                  alt="Profile photo of Tyler Schaefer"
-                  loading="lazy"
-                />
-              </div>
-              <div class="col-sm-12">
-                <div>
-                  <p>
-                    Specializes in algorithm optimization and mathematical validation for ML models. Focuses on
-                    maintaining accuracy during the optimization and model splitting process.
-                  </p>
-                </div>
-              </div>
-            </article>
+  <div class="row">
+    <!-- Team Member 1 -->
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+      <div class="team text-center rounded p-3">
+        <div class="position-relative">
+          <img src="./tyler.webp" class="img-fluid rounded-circle" alt="Profile photo of Tyler Schaefer">
+          <div class="overlay rounded-circle bg-dark"></div>
+        </div>
+        <div class="content mt-3">
+          <h4 class="title mb-0">Tyler Schaefer</h4>
+          <small class="text-muted member-position">ML Algorithm Analyst</small>
+          <p class="text-muted mt-3">
+            Specializes in algorithm optimization and mathematical validation for ML models. Focuses on maintaining accuracy during the optimization and model splitting process.
+          </p>
+        </div>
+      </div>
+    </div>
 
-            <article class="col-lg-3 col-md-3 col-sm-6 team-member">
-              <div class="text-center">
-                <h4 class="title">Conner Ohnesorge</h4>
-                <small class="text-muted">ML Integration HWE</small>
-                <img
-                  src="./conner.webp"
-                  class="img-responsive"
-                  alt="Profile photo of Conner Ohnesorge"
-                  loading="lazy"
-                />
-              </div>
-              <div class="col-sm-12">
-                <div>
-                  <p>
-                    Specializes in hardware optimization for ML models with experience in FPGA implementation. Also
-                    serves as the development environment manager.
-                  </p>
-                </div>
-              </div>
-            </article>
+    <!-- Team Member 2 -->
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+      <div class="team text-center rounded p-3">
+        <div class="position-relative">
+          <img src="./conner.webp" class="img-fluid rounded-circle" alt="Profile photo of Conner Ohnesorge">
+          <div class="overlay rounded-circle bg-dark"></div>
+        </div>
+        <div class="content mt-3">
+          <h4 class="title mb-0">Conner Ohnesorge</h4>
+          <small class="text-muted member-position">ML Integration HWE</small>
+          <p class="text-muted mt-3">
+            Specializes in hardware optimization for ML models with experience in FPGA implementation. Also serves as the development environment manager.
+          </p>
+        </div>
+      </div>
+    </div>
 
-            <article class="col-lg-3 col-md-3 col-sm-6 team-member">
-              <div class="text-center">
-                <h4 class="title">Aidan Perry</h4>
-                <small class="text-muted">Multithreaded Program Developer</small>
-                <img
-                  src="./aidan.webp"
-                  class="img-responsive"
-                  alt="Profile photo of Aidan Perry"
-                  loading="lazy"
-                />
-              </div>
-              <div class="col-sm-12">
-                <div>
-                  <p>
-                    Leads threading implementation and synchronization for parallel processing. Experienced in real-time
-                    systems and FPGA programming.
-                  </p>
-                </div>
-              </div>
-            </article>
+    <!-- Team Member 3 -->
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+      <div class="team text-center rounded p-3">
+        <div class="position-relative">
+          <img src="./aidan.webp" class="img-fluid rounded-circle" alt="Profile photo of Aidan Perry">
+          <div class="overlay rounded-circle bg-dark"></div>
+        </div>
+        <div class="content mt-3">
+          <h4 class="title mb-0">Aidan Perry</h4>
+          <small class="text-muted member-position">Multithreaded Program Developer</small>
+          <p class="text-muted mt-3">
+            Leads threading implementation and synchronization for parallel processing. Experienced in real-time systems and FPGA programming.
+          </p>
+        </div>
+      </div>
+    </div>
 
-            <article class="col-lg-3 col-md-3 col-sm-6 team-member">
-              <div class="text-center">
-                <h4 class="title">Joey Metzen</h4>
-                <small class="text-muted">Kria Board Manager</small>
-                <img
-                  src="./joey.webp"
-                  class="img-responsive"
-                  alt="Profile photo of Joey Metzen"
-                  loading="lazy"
-                />
-              </div>
-              <div class="col-sm-12">
-                <div>
-                  <p>
-                    Responsible for hardware management and memory optimization. Leads testing and benchmarking efforts
-                    for the system.
-                  </p>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
+    <!-- Team Member 4 -->
+    <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+      <div class="team text-center rounded p-3">
+        <div class="position-relative">
+          <img src="./joey.webp" class="img-fluid rounded-circle" alt="Profile photo of Joey Metzen">
+          <div class="overlay rounded-circle bg-dark"></div>
+        </div>
+        <div class="content mt-3">
+          <h4 class="title mb-0">Joey Metzen</h4>
+          <small class="text-muted member-position">Kria Board Manager</small>
+          <p class="text-muted mt-3">
+            Responsible for hardware management and memory optimization. Leads testing and benchmarking efforts for the system.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         <section
           class="row"
@@ -430,7 +444,6 @@
           </div>
         </section>
 
-        <!-- MODIFIED DOCUMENTS SECTIONS WITH TWO-COLUMN LAYOUT AND STICKY PREVIEW -->
         <div
           class="row"
           id="documents-sections"
