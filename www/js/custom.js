@@ -733,7 +733,6 @@ document.addEventListener("DOMContentLoaded", function () {
     placeholder.style.display = "flex";
     stickyIframe.style.display = "none";
     stickyIframe.src = "";
-    activePdfUrl = null;
   }
 
   function showPdfPreview(pdfUrl, linkElement) {
@@ -756,8 +755,6 @@ document.addEventListener("DOMContentLoaded", function () {
         linkElement.classList.add("active-pdf");
       }
 
-      activePdfUrl = pdfUrl;
-
       // Remove loading state when iframe is loaded
       stickyIframe.onload = function () {
         stickyPreview.classList.remove("loading");
@@ -769,20 +766,10 @@ document.addEventListener("DOMContentLoaded", function () {
   showPlaceholder();
 
   // Handle hover events for PDF links
-  let hoverTimer;
   pdfLinks.forEach((link) => {
-    // Mouse enter - show preview after small delay to prevent flickering
     link.addEventListener("mouseenter", function () {
-      clearTimeout(hoverTimer);
-      hoverTimer = setTimeout(() => {
-        const pdfUrl = this.getAttribute("data-pdf-url");
-        showPdfPreview(pdfUrl, this);
-      }, 150); // Small delay to prevent flickering when moving mouse between links
-    });
-
-    // Mouse leave - clear hover timer
-    link.addEventListener("mouseleave", function () {
-      clearTimeout(hoverTimer);
+      const pdfUrl = this.getAttribute("data-pdf-url");
+      showPdfPreview(pdfUrl, this);
     });
   });
 
@@ -806,10 +793,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewHeight = stickyPreview.offsetHeight;
     const footerTop = footerRect.top;
 
-    // Calculate the fixed width needed for the preview when sticky
-    // It should maintain the same width as its container
-    const fixedWidth = containerRect.width;
-
     // Check if preview should be sticky (container is in view but not fully visible)
     if (containerTop < 20 && containerBottom > previewHeight + 20) {
       // Ensure it doesn't overlap with the footer
@@ -822,7 +805,7 @@ document.addEventListener("DOMContentLoaded", function () {
         stickyPreview.classList.add("is-sticky");
         stickyPreview.classList.remove("at-bottom");
         // Update width to match container
-        stickyPreview.style.width = fixedWidth + "px";
+        stickyPreview.style.width = containerRect.width + "px";
       }
     } else if (containerBottom < previewHeight + 40) {
       // Near the bottom of the container
