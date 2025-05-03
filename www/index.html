@@ -617,154 +617,100 @@
           </div>
         </section>
 
-        <section
-          class="row"
-          id="designdocuments"
-        >
+        <!-- MODIFIED DOCUMENTS SECTIONS WITH TWO-COLUMN LAYOUT AND STICKY PREVIEW -->
+        <div class="row" id="documents-sections">
           <div class="col-xs-12">
-            <h2>Design Documents</h2>
+            <h2 class="section-title">Project Documentation</h2>
+            <div class="documents-container">
+              <!-- Left column: Document links -->
+              <div class="documents-links">
+                <section id="designdocuments">
+                  <h2>Design Documents</h2>
+                  <div class="pdf-link-container" data-pdf-url="design-doc-1.pdf">
+                    <a href="design-doc-1.pdf" class="pdf-link">
+                      Design Doc 1: Semantic Segmentation Optimization
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    This document outlines the design specifications for our eye tracking semantic segmentation optimization
+                    project. It includes the mathematical approach to dividing the U-Net algorithm, memory allocation
+                    strategies, thread synchronization mechanisms, and hardware configurations for the
+                    <a href="https://www.amd.com/en/products/system-on-modules/kria/k26/kv260-vision-starter-kit.html">
+                      AMD Kria KV260
+                    </a>
+                    development board platform.
+                  </p>
+                </section>
 
-            <div class="pdf-link-container">
-              <a
-                href="design-doc-1.pdf"
-                class="pdf-link"
-              >
-                Design Doc 1: Semantic Segmentation Optimization
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="design-doc-1.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Design Document 1"
-                ></iframe>
+                <section id="lightning-talks">
+                  <h2>Lightning Talks</h2>
+                  <div class="pdf-link-container" data-pdf-url="lightning-talk-1.pdf">
+                    <a href="lightning-talk-1.pdf" class="pdf-link">
+                      Lightning Talk 1: Project Overview
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    A presentation covering our project's objectives, technical approach, and preliminary results for
+                    optimizing semantic segmentation for eye tracking applications on resource-constrained hardware.
+                  </p>
+                </section>
+
+                <section id="engineering-standards">
+                  <h2>Engineering Standards</h2>
+                  <div class="pdf-link-container" data-pdf-url="engineering-standards.pdf">
+                    <a href="engineering-standards.pdf" class="pdf-link">
+                      Engineering Standards
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    Documentation of the engineering standards used in our project, including IEEE standards for AI-based
+                    image recognition (IEEE 3129-2023), medical device performance evaluation (IEEE 2802-2022), and data
+                    privacy (IEEE 7002-2022).
+                  </p>
+                </section>
+
+                <section id="testing">
+                  <h2>Testing</h2>
+                  <div class="pdf-link-container" data-pdf-url="testing-strategy.pdf">
+                    <a href="testing-strategy.pdf" class="pdf-link">
+                      Testing Strategy
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    Comprehensive testing strategy document outlining our approach for validating the semantic segmentation
+                    optimization, including unit testing, integration testing, system testing, and performance benchmarking.
+                  </p>
+
+                  <div class="pdf-link-container" data-pdf-url="user-testing-plan.pdf">
+                    <a href="./user-testing-plan.pdf" class="pdf-link">
+                      User Testing
+                    </a>
+                    <span class="pdf-indicator">[PDF]</span>
+                  </div>
+                  <p class="document-summary">
+                    User testing plan document outlining the testing procedures and metrics for ensuring the quality of the
+                    provided product to users.
+                  </p>
+                </section>
+              </div>
+
+              <!-- Right column: Sticky PDF preview -->
+              <div class="sticky-preview-container">
+                <div class="sticky-preview" id="sticky-pdf-preview">
+                  <div class="sticky-preview-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>Hover over a PDF link to preview</p>
+                  </div>
+                  <iframe id="sticky-pdf-iframe" title="PDF Preview" src=""></iframe>
+                </div>
               </div>
             </div>
-            <br />
-            <p class="document-summary">
-              This document outlines the design specifications for our eye tracking semantic segmentation optimization
-              project. It includes the mathematical approach to dividing the U-Net algorithm, memory allocation
-              strategies, thread synchronization mechanisms, and hardware configurations for the
-              <a href="https://www.amd.com/en/products/system-on-modules/kria/k26/kv260-vision-starter-kit.html">
-                AMD Kria KV260
-              </a>
-              development board. platform.
-            </p>
           </div>
-        </section>
-
-        <section
-          class="row"
-          id="lightning-talks"
-        >
-          <div class="col-xs-12">
-            <h2>Lightning Talks</h2>
-            <div class="pdf-link-container">
-              <a
-                href="lightning-talk-1.pdf"
-                class="pdf-link"
-              >
-                Lightning Talk 1: Project Overview
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="lightning-talk-1.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Lightning Talk 1"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              A presentation covering our project's objectives, technical approach, and preliminary results for
-              optimizing semantic segmentation for eye tracking applications on resource-constrained hardware.
-            </p>
-          </div>
-        </section>
-
-        <section
-          class="row"
-          id="engineering-standards"
-        >
-          <div class="col-xs-12">
-            <h2>Engineering Standards</h2>
-            <div class="pdf-link-container">
-              <a
-                href="engineering-standards.pdf"
-                class="pdf-link"
-              >
-                Engineering Standards
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="engineering-standards.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Engineering Standards"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              Documentation of the engineering standards used in our project, including IEEE standards for AI-based
-              image recognition (IEEE 3129-2023), medical device performance evaluation (IEEE 2802-2022), and data
-              privacy (IEEE 7002-2022).
-            </p>
-          </div>
-        </section>
-
-        <section
-          class="row"
-          id="testing"
-        >
-          <div class="col-xs-12">
-            <h2>Testing</h2>
-            <div class="pdf-link-container">
-              <a
-                href="testing-strategy.pdf"
-                class="pdf-link"
-              >
-                Testing Strategy
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="testing-strategy.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Testing Strategy"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              Comprehensive testing strategy document outlining our approach for validating the semantic segmentation
-              optimization, including unit testing, integration testing, system testing, and performance benchmarking.
-            </p>
-
-            <div class="pdf-link-container">
-              <a
-                href="./user-testing-plan.pdf"
-                class="pdf-link"
-              >
-                User Testing
-              </a>
-              <span class="pdf-indicator">[PDF]</span>
-              <div class="pdf-preview">
-                <iframe
-                  data-pdf-url="user-testing-plan.pdf"
-                  class="pdf-thumbnail"
-                  title="Preview of Testing Strategy"
-                ></iframe>
-              </div>
-            </div>
-            <br />
-            <p class="document-summary">
-              User testing plan document outlining the testing procedures and metrics for ensuring the quality of the
-              provided product to users.
-            </p>
-          </div>
-        </section>
+        </div>
       </div>
     </main>
 
@@ -848,5 +794,5 @@
       defer
       src="js/custom.js"
     ></script>
-  </body>
-</html>
+</body>
+  </html>
