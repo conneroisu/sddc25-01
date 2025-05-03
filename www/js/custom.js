@@ -785,24 +785,6 @@ document.addEventListener("DOMContentLoaded", function () {
     link.addEventListener("mouseleave", function () {
       clearTimeout(hoverTimer);
     });
-
-    // Click - show preview and remember the selection
-    link.addEventListener("click", function (e) {
-      // Prevent anchor tag default behavior
-      const linkElement = this.querySelector(".pdf-link");
-      if (linkElement) {
-        e.preventDefault();
-      }
-
-      const pdfUrl = this.getAttribute("data-pdf-url");
-      lastClickedPdfUrl = pdfUrl;
-      showPdfPreview(pdfUrl, this);
-
-      // Scroll to the preview if on mobile
-      if (window.innerWidth <= 992) {
-        stickyPreview.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    });
   });
 
   // Custom sticky implementation with precise control
